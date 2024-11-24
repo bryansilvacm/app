@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@inquirer/figures": "^1.0.8",
+    "@inquirer/prompts": "^7.1.0"
+  }
+}
