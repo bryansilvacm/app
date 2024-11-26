@@ -20,11 +20,11 @@ const cadastrarMeta = async () => {
         console.log("Atenção a meta não pode ser vazia!")
         return 
     //com o metodo push, pega a meta que o usuario digitou e insere no array metas, define o checked como false    
-    } else{
+    }
         metas.push(
-            {value:meta, ckecked:false}
+            {value:meta, checked:false}
         )    
-}}
+}
 
 //função para listar as metas
 //usa o async e o await
@@ -56,6 +56,20 @@ const listarMetas = async () =>{
 
 }
 
+const metasRealizadas = async () => {
+    const realizadas = metas.filter(( meta )=>{
+        return meta.checked 
+    })
+    if (realizadas.length == 0){
+        console.log("Não existem metas realizadas! :(")
+        return
+    }
+    await select({
+        message: "Metas Realizadas",
+        choices: [...realizadas] // 3 pontinhos chama-se spreed operator
+    })
+}
+
 
 const start = async () =>{ //colocamos o async para poder usar o await depois
 
@@ -72,6 +86,10 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
                     value: "listar"
                 },
                 {
+                    name:"Metas Realizadas",
+                    value: "realizadas"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -85,6 +103,8 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
             case "listar":
                 await listarMetas()
                 break
+            case "realizadas":
+                await metasRealizadas()
             case "sair":
                 return        
         }
