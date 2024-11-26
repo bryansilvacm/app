@@ -35,15 +35,18 @@ const listarMetas = async () =>{
         choices: [...metas], // os 3 pontinhos servem para jogar os intens do array metas dentro de choices, assim não modificamos o array de metas diretamente 
         instructions: false, //retira as instruções automáticas em inglês
     })
+    
+    //marca todas as metas como false para fazer a função de desmarcar (não entendi muito bem mas tá funcionando rsrs)
+    metas.forEach((m) => {
+        m.checked = false
+    })        
+    
     //verifica se o usuário selecionou ou não alguma meta
     if (respostas.length == 0){
         console.log("Nenhuma meta selecionada")
         return
     } 
-    //marca todas as metas como false para fazer a função de desmarcar (não entendi muito bem mas tá funcionando rsrs)
-    metas.forEach((m) => {
-        m.checked = false
-    })        
+    
     // pega todas as resposta e o metodo forEach itera cada resposta sobre todas as metas 
     respostas.forEach((resposta) => {
         const meta = metas.find((m) => { //o find() verifica todas as metas e compara a meta com a resposta (que selecionamos no checkbox), se for igual marca como true
