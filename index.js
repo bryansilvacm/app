@@ -73,6 +73,19 @@ const metasRealizadas = async () => {
     })
 }
 
+const metasAbertas = async () => {
+    const abertas = metas.filter((meta) => {
+        return !meta.checked
+    })
+    if (abertas.length == 0){
+        console.log("Não existem metas abertas! :)")
+        return
+    }
+    await select ({
+        message: "Metas Abertas: " + abertas.length,
+        choices: [...abertas]
+    })
+}
 
 const start = async () =>{ //colocamos o async para poder usar o await depois
 
@@ -93,6 +106,10 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
                     value: "realizadas"
                 },
                 {
+                    name: "Metas Abertas",
+                    value: "abertas"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -108,7 +125,12 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
                 break
             case "realizadas":
                 await metasRealizadas()
+                break
+            case "abertas":
+                await metasAbertas()
+                break
             case "sair":
+                console.log("Até a próxima!")
                 return        
         }
     }
