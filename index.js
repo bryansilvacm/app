@@ -68,7 +68,7 @@ const metasRealizadas = async () => {
         return
     }
     await select({
-        message: "Metas Realizadas",
+        message: "Metas Realizadas:",
         choices: [...realizadas] // 3 pontinhos chama-se spreed operator
     })
 }
@@ -85,6 +85,30 @@ const metasAbertas = async () => {
         message: "Metas Abertas: " + abertas.length,
         choices: [...abertas]
     })
+}
+
+const deletarMeta = async () => {
+    const metasDesmarcadas = metas.map((meta) =>{
+        return {value: meta.value, checked: false}
+    })
+
+    const itensaDeletar = await checkbox ({
+        message: "Selecione a(s) meta(s) para deletar (use as setas para navegar, o espaço para selecionar e o enter para finalizar",
+        choices: [...metasDesmarcadas],
+        instructions: false
+    })
+    if (itensaDeletar.length == 0){
+        console.log("Nenhum item para deletar!")
+        return
+    }
+
+    itensaDeletar.forEach((item)=>{
+        metas= metas.filter((meta)=>{
+            return meta.value != item
+        })
+    })
+    
+    console.log("Meta(s) Deletada(s) com sucesso!")
 }
 
 const start = async () =>{ //colocamos o async para poder usar o await depois
@@ -110,6 +134,10 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
                     value: "abertas"
                 },
                 {
+                    name:"Deletar Meta",
+                    value: "deletar"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -128,6 +156,9 @@ const start = async () =>{ //colocamos o async para poder usar o await depois
                 break
             case "abertas":
                 await metasAbertas()
+                break
+            case "deletar":
+                await deletarMeta()
                 break
             case "sair":
                 console.log("Até a próxima!")
