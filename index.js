@@ -1,16 +1,26 @@
 //usamos o prompt para fazer uma caixinha de pergunta para o usuario responder
 const { select, input, checkbox } = require('@inquirer/prompts') //informa o node que vamos usar o modulo inquirer, fazendo a requisição do prompts do modulo inquirer
+const fs = require ('fs').promises
 
 let mensagem = "Bem vindo ao app!";
 
-//cria um objeto modelo para cada meta, contendo o nome (value) e o status (checked)
-let meta = {
-    value:"Tomar 1L de água por dia",
-    checked: false,
+// array com todas as metas
+let metas
+
+const carregarMetas = async () => {
+    try {
+        const dados = await fs.readFile("metas.json", "utf-8")
+        metas = JSON.parse(dados) 
+       }
+    catch(erro) {
+        metas = []
+    }
 }
 
-// array com todas as metas
-let metas = [meta]
+const salvarMetas = async () => {
+    await fs.writeFile("metas.json", JSON.stringify(metas, null, 2))
+}
+
 
 //função para cadastrar a meta
 const cadastrarMeta = async () => {
@@ -126,9 +136,12 @@ const mostrarMensagem = () => {
 }
 
 const start = async () =>{ //colocamos o async para poder usar o await depois
+    await carregarMetas()
 
     while(true){
         mostrarMensagem()
+        await salvarMetas()
+
         const opcao = await select({
             message:"Menu >",
             choices:[
