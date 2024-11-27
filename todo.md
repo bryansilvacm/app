@@ -1,7 +1,7 @@
 [-]criar metas
 [-]listar metas
-    metas realizadas
-    metas abertas
+   [-] metas realizadas
+    [-]metas abertas
 [-]marcar e desmarcar metas como concluidas
--remover metas
--sistema d mensagem
+[-]remover metas
+[-]sistema d mensagem

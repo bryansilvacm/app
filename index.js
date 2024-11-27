@@ -1,6 +1,8 @@
 //usamos o prompt para fazer uma caixinha de pergunta para o usuario responder
 const { select, input, checkbox } = require('@inquirer/prompts') //informa o node que vamos usar o modulo inquirer, fazendo a requisição do prompts do modulo inquirer
 
+let mensagem = "Bem vindo ao app!";
+
 //cria um objeto modelo para cada meta, contendo o nome (value) e o status (checked)
 let meta = {
     value:"Tomar 1L de água por dia",
@@ -17,13 +19,14 @@ const cadastrarMeta = async () => {
     
     //verifica se o usuário digitou, caso não, apresenta o erro
     if (meta.length == 0 ){
-        console.log("Atenção a meta não pode ser vazia!")
+        mensagem = "Atenção a meta não pode ser vazia!";
         return 
     //com o metodo push, pega a meta que o usuario digitou e insere no array metas, define o checked como false    
     }
         metas.push(
             {value:meta, checked:false}
-        )    
+        )  
+        mensagem = "Meta Cadastrada com sucesso"  
 }
 
 //função para listar as metas
@@ -43,7 +46,7 @@ const listarMetas = async () =>{
     
     //verifica se o usuário selecionou ou não alguma meta
     if (respostas.length == 0){
-        console.log("Nenhuma meta selecionada")
+        mensagem = "Nenhuma meta selecionada";
         return
     } 
     
@@ -55,7 +58,7 @@ const listarMetas = async () =>{
         meta.checked= true 
     });
     //conclui as metas que selecionamos
-    console.log("Meta(s) marcarda(s) como concluidas")
+    mensagem = "Meta(s) marcarda(s) como concluidas";
 
 }
 
@@ -64,11 +67,11 @@ const metasRealizadas = async () => {
         return meta.checked 
     })
     if (realizadas.length == 0){
-        console.log("Não existem metas realizadas! :(")
+        mensagem = "Não existem metas realizadas! :("
         return
     }
     await select({
-        message: "Metas Realizadas:",
+        message: "Metas Realizadas: ",
         choices: [...realizadas] // 3 pontinhos chama-se spreed operator
     })
 }
@@ -78,7 +81,7 @@ const metasAbertas = async () => {
         return !meta.checked
     })
     if (abertas.length == 0){
-        console.log("Não existem metas abertas! :)")
+        mensagem = "Não existem metas abertas! :)";
         return
     }
     await select ({
@@ -98,7 +101,7 @@ const deletarMeta = async () => {
         instructions: false
     })
     if (itensaDeletar.length == 0){
-        console.log("Nenhum item para deletar!")
+        mensagem = "Nenhum item para deletar!";
         return
     }
 
@@ -108,12 +111,24 @@ const deletarMeta = async () => {
         })
     })
     
-    console.log("Meta(s) Deletada(s) com sucesso!")
+    mensagem = "Meta(s) Deletada(s) com sucesso!";
+}
+
+const mostrarMensagem = () => {
+    
+    console.clear();
+    
+    if (mensagem != ""){
+        console.log(mensagem)
+        console.log("---------------");
+        mensagem = "";
+    }
 }
 
 const start = async () =>{ //colocamos o async para poder usar o await depois
 
     while(true){
+        mostrarMensagem()
         const opcao = await select({
             message:"Menu >",
             choices:[
