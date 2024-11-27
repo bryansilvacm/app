@@ -5,3 +5,6 @@ digitamos no terminal "npm install pacote (nome do pacote, ex: inquirer)
 #parei no minuto 40 aula 2 iniciante
 
 --no JavaScript praticamente tudo é entedido como objeto pois tudo tem metodos e propriedades 
+
+
+#parei no minuto 35 aula 3 iniciante
